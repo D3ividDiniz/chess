@@ -19,6 +19,7 @@ Abra `http://localhost:3000`. O servidor copia os arquivos locais de chess.js e 
 - Importação de PGN e análise por lance em profundidades 10, 14 ou 18.
 - Avaliação de posição, categorias de lance e precisão aproximada por lado.
 - Tabuleiro com navegação de lances, setas, barra de avaliação e atalhos de teclado.
+- Interface mobile em tela cheia, instalação como PWA, temas de tabuleiro e peças com contorno de alto contraste.
 - Partidas contra Stockfish, seleção de lado, nível, relógio, desistência, empate, takeback e sons sintetizados.
 - Biblioteca offline em `localStorage`, com exportação e importação de backup JSON.
 

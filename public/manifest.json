@@ -1,0 +1,12 @@
+{
+  "name": "Peleleca Chess",
+  "short_name": "Peleleca",
+  "description": "Xadrez no celular: análise e partidas contra Stockfish.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#11140f",
+  "theme_color": "#11140f",
+  "icons": [{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
