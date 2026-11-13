@@ -1,0 +1,3 @@
+export function point(square,flipped=false){const file=square.charCodeAt(0)-97,rank=+square[1]-1;return `${(flipped?7-file:file)*100+50},${(flipped?rank:7-rank)*100+50}`}
+export function arrow(path,from,to,flipped=false){if(path)path.setAttribute('d',`M ${point(from,flipped)} L ${point(to,flipped)}`)}
+export function drawArrows(best,played,flipped=false){const parse=x=>x&&x.length>=4?x.slice(0,4):null;const b=parse(best),p=parse(played);arrow(document.querySelector('#best-arrow'),b?.slice(0,2),b?.slice(2,4),flipped);arrow(document.querySelector('#played-arrow'),p?.slice(0,2),p?.slice(2,4),flipped)}

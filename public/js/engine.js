@@ -1,0 +1,7 @@
+let worker=null,ready=false,pending=null,lastInfo=null;
+export function start(){if(worker)return worker;try{worker=new Worker('/vendor/stockfish/stockfish-nnue-16-single.js');worker.onmessage=({data})=>{const line=String(data);if(line==='uciok'||line==='readyok')ready=true;if(line.startsWith('info ')){const m=line.match(/\bscore (cp|mate) (-?\d+)/);if(m)lastInfo={kind:m[1],value:+m[2],line};}if(line.startsWith('bestmove')&&pending){const job=pending;pending=null;job.resolve({best:line.split(/\s+/)[1],info:lastInfo});}};worker.onerror=()=>{if(pending){pending.reject(new Error('Stockfish não iniciou. Confira se os arquivos do engine foram publicados.'));pending=null}};worker.postMessage('uci');return worker}catch{throw new Error('Este navegador não conseguiu iniciar o Stockfish.')}}
+export function command(cmd){start().postMessage(cmd)}
+export function configure({skill=10,elo=1800}={}){const w=start();w.postMessage(`setoption name Skill Level value ${skill}`);w.postMessage('setoption name UCI_LimitStrength value true');w.postMessage(`setoption name UCI_Elo value ${elo}`);w.postMessage('isready')}
+export function search(fen,{depth=12,movetime}={}){start();if(pending)pending.reject(new Error('Busca substituída'));return new Promise((resolve,reject)=>{pending={resolve,reject};lastInfo=null;worker.postMessage(`position fen ${fen}`);worker.postMessage(movetime?`go movetime ${movetime}`:`go depth ${depth}`)})}
+export function stop(){if(worker)worker.postMessage('stop')}
+export function isReady(){return ready}
